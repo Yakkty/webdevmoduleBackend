@@ -9,4 +9,7 @@ router.get("/:pid", patientsControllers.getPatientById);
 
 router.post("/", patientsControllers.createPatient);
 
+router.patch("/:pid", patientsControllers.updatePatient);
+router.delete("/:pid", patientsControllers.deletePatient);
+
 module.exports = router;

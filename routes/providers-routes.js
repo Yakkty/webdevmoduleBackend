@@ -48,4 +48,8 @@ router.get("/:prid", providersControllers.getProviderById);
 
 router.post("/", providersControllers.createProvider);
 
+router.patch("/:prid", providersControllers.updateProvider);
+
+router.delete("/:prid", providersControllers.deleteProvider);
+
 module.exports = router;
