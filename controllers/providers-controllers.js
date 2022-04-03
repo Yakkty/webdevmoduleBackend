@@ -1,7 +1,6 @@
 const HttpError = require("../models/http-error");
 const Provider = require("../models/provider");
 
-
 const getProviders = async (req, res, next) => {
   let providers;
 
@@ -45,8 +44,7 @@ const createProvider = async (req, res, next) => {
     name: name,
     role: role,
     description: description,
-    image:
-      "https://i.ytimg.com/vi/vvvvcpwFw5o/maxresdefault.jpg",
+    image: req.file.path,
   });
 
   try {

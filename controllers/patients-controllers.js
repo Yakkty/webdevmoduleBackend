@@ -3,45 +3,6 @@ const { v4: uuidv4 } = require("uuid");
 const HttpError = require("../models/http-error");
 const Patient = require("../models/patient");
 
-let DUMMY_PATIENTS = [
-  {
-    id: "p1",
-    name: "Rafael",
-    age: "25",
-    status: "Current Patient",
-  },
-  {
-    id: "p2",
-    name: "Lisa",
-    age: "22",
-    status: "Recovered",
-  },
-  {
-    id: "p3",
-    name: "Tom",
-    age: "19",
-    status: "Current Patient",
-  },
-  {
-    id: "p4",
-    name: "Tom",
-    age: "19",
-    status: "Current Patient",
-  },
-  {
-    id: "p5",
-    name: "Tom",
-    age: "19",
-    status: "Current Patient",
-  },
-  {
-    id: "p6",
-    name: "Tom",
-    age: "19",
-    status: "Current Patient",
-  },
-];
-
 const getPatients = async (req, res, next) => {
   let patients;
 
@@ -85,10 +46,7 @@ const createPatient = async (req, res, next) => {
     name: name,
     age: age,
     status: status,
-    image:
-      "https://i.ytimg.com/vi/vvvvcpwFw5o/maxresdefault.jpg",
-    report:
-      "https://i.ytimg.com/vi/vvvvcpwFw5o/maxresdefault.jpg",
+    report: "http://localhost:5000/" + req.file.path,
   });
 
   try {

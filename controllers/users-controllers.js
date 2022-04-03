@@ -1,23 +1,6 @@
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
 
-const DUMMY_USERS = [
-  {
-    id: "u1",
-    username: "Username",
-    password: "Admin",
-  },
-  {
-    id: "u2",
-    username: "Username1",
-    password: "Admin1",
-  },
-  {
-    id: "u3",
-    username: "Username2",
-    password: "Admin2",
-  },
-];
 
 const getUsers = (req, res, next) => {
   const user = DUMMY_USERS;

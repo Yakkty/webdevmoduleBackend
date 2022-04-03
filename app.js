@@ -1,3 +1,5 @@
+const path = require("path");
+
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -10,7 +12,9 @@ const HttpError = require("./models/http-error");
 const app = express();
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+
+app.use("/uploads/files", express.static(path.join("uploads", "files")));
+// app.use("/uploads/reports", express.static(path.join("uploads", "reports")));
 
 //Fix CORS errors, allows any domain to send requests
 app.use((req, res, next) => {
