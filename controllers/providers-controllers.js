@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const HttpError = require("../models/http-error");
 const Provider = require("../models/provider");
 
@@ -52,7 +54,14 @@ const createProvider = async (req, res, next) => {
   } catch {
     const error = new HttpError("Creating provider failed", 500);
     return next(error);
+    
   }
+
+    
+  const imagePath = createdProvider.image;
+  console.log(imagePath);
+
+
 
   res.status(201).json(createdProvider);
 };
@@ -100,12 +109,17 @@ const deleteProvider = async (req, res, next) => {
     return next(error);
   }
 
+  const imagePath = provider.image;
+
   try {
     provider.remove();
   } catch (err) {
     const error = new HttpError("Could not delete provider ", 500);
     return next(error);
   }
+  fs.unlink(imagePath, err => {
+    console.log(err);
+  });
 
   res.status(200).json({ message: "Deleted place" });
 };

@@ -13,8 +13,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/uploads/files", express.static(path.join("uploads", "files")));
-// app.use("/uploads/reports", express.static(path.join("uploads", "reports")));
+app.use("/uploads/", express.static(path.join("uploads")));
 
 //Fix CORS errors, allows any domain to send requests
 app.use((req, res, next) => {

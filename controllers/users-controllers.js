@@ -1,6 +1,7 @@
+const jwt = require("jsonwebtoken");
+
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
-
 
 const getUsers = (req, res, next) => {
   const user = DUMMY_USERS;
@@ -27,7 +28,26 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ message: "Logged in" });
+  let token;
+  try {
+    token = jwt.sign(
+      {
+        userId: existingUser.id,
+        username: existingUser.username,
+      },
+      "token_login_key",
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError("Logging in failed credentials", 500);
+    return next(error);
+  }
+
+  res.json({
+    userId: existingUser.id,
+    username: existingUser.username,
+    token: token,
+  });
 };
 
 exports.login = login;

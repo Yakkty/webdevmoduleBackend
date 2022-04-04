@@ -2,16 +2,18 @@ const express = require("express");
 
 const patientsControllers = require("../controllers/patients-controllers");
 const reportUpload = require("../middleware/report-upload");
+const auth = require("../middleware/auth");
 const router = express.Router();
-const fileUpload = require("../middleware/file-upload");
 
 router.get("/", patientsControllers.getPatients);
 
 router.get("/:pid", patientsControllers.getPatientById);
 
+router.use(auth);
+
 router.post(
   "/",
-  fileUpload.single("report"),
+  reportUpload.single("report"),
   patientsControllers.createPatient
 );
 

@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
 
 const HttpError = require("../models/http-error");
 const Patient = require("../models/patient");
@@ -46,7 +46,7 @@ const createPatient = async (req, res, next) => {
     name: name,
     age: age,
     status: status,
-    report: "http://localhost:5000/" + req.file.path,
+    report: req.file.path,
   });
 
   try {
@@ -55,6 +55,10 @@ const createPatient = async (req, res, next) => {
     const error = new HttpError("Creating patient failed", 500);
     return next(error);
   }
+
+  
+  const reportPath = createdPatient.report;
+  console.log(reportPath);
 
   res.status(201).json(createdPatient);
 };
@@ -94,20 +98,27 @@ const updatePatient = async (req, res, next) => {
 const deletePatient = async (req, res, next) => {
   const patientId = req.params.pid;
 
-  let place;
+  let patient;
   try {
-    place = await Patient.findById(patientId);
+    patient = await Patient.findById(patientId);
   } catch (err) {
     const error = new HttpError("Could not delete patient ", 500);
     return next(error);
   }
 
+  const reportPath = patient.report;
+
   try {
-    await place.remove();
+    await patient.remove();
   } catch (err) {
     const error = new HttpError("Could not delete patient ", 500);
     return next(error);
   }
+  console.log(reportPath);
+
+  fs.unlink(reportPath, err => {
+    console.log(err);
+  });
 
   res.status(200).json({ message: "Deleted place" });
 };
